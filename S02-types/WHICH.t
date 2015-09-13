@@ -74,7 +74,6 @@ my @normal = <
   Num
   ObjAt
   Pair
-  PairMap
   Parameter
   Perl
   Pod::Block
@@ -193,8 +192,6 @@ my @normal = <
   X::Obsolete
   X::OutOfRange
   X::Package::Stubbed
-  X::PairMap::DoesNotExist
-  X::PairMap::NotAllowed
   X::Parameter::Default
   X::Parameter::InvalidType
   X::Parameter::MultipleTypeConstraints
