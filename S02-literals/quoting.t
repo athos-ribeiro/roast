@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 175;
+plan 176;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -259,7 +259,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 {
     #L<S02/Forcing item context/"relationship" "single quotes" "double angles">
     my ($x, $y) = <a b>;
-    ok(«$x $y» === <a b>, "«$x $y» interpolation works correctly");
+    ok(«$x $y» eq <a b>, "«$x $y» interpolation works correctly");
 };
 
 
@@ -589,6 +589,13 @@ is "\c@a", "\0a", '\c@ is a NUL';
       "Unmatched openers and closers fails to parse";
     is q< \> >, " > ", "Escaped closer produces the opener unescaped";
     is q< \< >, " < ", "Escaped opener produces the opener unescaped";
+}
+
+# RT #125995
+{
+    sub a(**@a) { @a.elems }
+    my $res = a << a b >>;
+    is $res, 1, '<< a b >> does not accidentally flatten into arg list';
 }
 
 # vim: ft=perl6

@@ -7,18 +7,14 @@ sub check($str, $expected_type, $expected_number, $desc?) {
     my $result = +$str;
     my $description = $desc // $str;
     is $result.WHAT.gist, $expected_type.gist, "$description (type)";
-    ok $result == $expected_number, "$description (value)"
-        or diag(
-              "got:      $result\n"
-            ~ "expected: $expected_number"
-        );
+    is $result, $expected_number, "$description (value)";
 }
 
 #?DOES 1
 sub f($str) {
     my $num = +$str;
     #?niecza todo 'Failure'
-    ok !$num.defined, "+$str fails";
+    ok !$num.defined, "+{$str.perl} fails";
 }
 
 check '',           Int,      0;
@@ -82,7 +78,7 @@ check '+1_2_3.0_0', Rat,    123;
 check '3/2',        Rat,    1.5;
 check '+3/2',       Rat,    1.5;
 check '-3/2',       Rat,    -1.5;
-#?rakudo 5 todo 'Failure RT #124690'
+#?rakudo 5 todo 'Unsure of what val() should accept'
 f     '-3/-2';
 f     '3/-2';
 f     '+3/-2';
@@ -148,7 +144,6 @@ is +"NaN",  'NaN',  'NaN';
     f      '3+3+4i';
 }
 
-#?rakudo todo "complex Str.Numeric RT #124691"
 f      '3+Infi';
 
 # TODO: Complex with radix
